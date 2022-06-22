@@ -1,25 +1,20 @@
-import logo from './logo.svg';
+import React,{useState} from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+function App(){
+  const [isRed,setRed]=useState(false);//variable ,function, default value
+  const [count,setCount]=useState(0);
+  const Increment=()=>{
+    setCount(count+1);
+    setRed(!isRed)
+  };
+  return(
+    <div className='dyar'>
+      <h1 className={isRed?"red":""}>Change my color</h1>
+      <button onClick={Increment}>increment</button>
+      <h1 className={count > 0 && count <= 5?"red":""}>{count}</h1>
     </div>
   );
-}
-
+};
 export default App;
+
