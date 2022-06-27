@@ -9,21 +9,25 @@ class Task3 extends Component {
             d1:"none",
             h2color:"darkgreen",
             bName:"Show",
+            btnshow:"none"
             };
     }
     
     show=()=>{
         if (this.state.d1 === "none") {
             this.setState ({
-                    d1:"block",
-                    bName:"Hide",
-            });
+                d1:"block",
+                bName:"Hide",
+                btnshow:"inline"
+            });    
         }
     
         else {
             this.setState ({
                     d1:"none",
                     bName:"Show",
+                    btnshow:"none"
+                    
             });
         }
     }
@@ -55,14 +59,14 @@ class Task3 extends Component {
         render() { 
             return (
                 <div className='App'>
-                    <h1>Task3 :</h1>
+                    <h1>Show and change Color of Text</h1>
                     <button onClick={this.show}  className='fun-btn'>{this.state.bName}</button> &emsp;
-                    <button onClick={this.change}  className='fun-btn'>change color</button>
-            <div  style={{display:this.state.d1, color:this.state.h2color}}>
-                        <h4>What is React used for?<br></br>
-                        React (also known as React.js or ReactJS) is a free and open-source front-end JavaScript library for building user interfaces based on UI components.</h4>
-            </div>
-            </div>
+                    <button onClick={this.change}  className='fun-btn'style={{display:this.state.btnshow}} >change color</button>
+                    <div style={{display:this.state.d1, color:this.state.h2color}}>
+                    <h4>What is React used for?<br></br>
+                    React (also known as React.js or ReactJS) is a free and open-source front-end JavaScript library for building user interfaces based on UI components.</h4>
+                    </div>
+                    </div>
             );
         }
     }
