@@ -1,59 +1,138 @@
-import React from "react";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import Table from 'react-bootstrap/Table';
-import './App.css';
-class App extends React.Component {
-   
-    // Constructor 
-    constructor(props) {
-        super(props);
-   
-        this.state = {
-            items: [],
-            DataisLoaded: false
-        };
-    }
-   
-    // ComponentDidMount is used to
-    // execute the code 
-    componentDidMount() {
-        fetch(
-"http://api.openweathermap.org/data/2.5/forecast?id=524901&appid={f50c0b3dbe98a792fb23929dee04c30a}")
-            .then((res) => res.json())
-            .then((json) => {
-                this.setState({
-                    items: json,
-                    DataisLoaded: true
-                });
-            })
-    }
-    render() {
-        const { DataisLoaded, items } = this.state;
-        if (!DataisLoaded) return <div>
-            <h1> Pleses wait some time.... </h1> </div> ;
-   
-        return (
-        <div className = "App">
-            <h1> Fetch data from an api in react </h1>
-            <table className="striped bordered hover">
-              <tr>
-            <th>User Name</th>
-            <th>Full Name</th>
-            {/* <th>Email</th> */}
-            </tr>
-            { items.map((item) => (
-             
-            <tr key = { item.id }>
-              <td>{ item.lat }</td>
-              <td> { item.lon }</td> console.log(item.id);
-              {/* <td> { item.email }</td> */}
-            </tr>
-                ) )
-            }</table>
-        </div>
-    );
-}
-}
-  
-export default App;
+import "./App.css";
+import { useState } from "react";
 
+const api = {
+  key: "f50c0b3dbe98a792fb23929dee04c30a",//ENTER_YOUR_API_KEY_HERE
+  base: "https://api.openweathermap.org/data/2.5/",
+};
+
+function App() {
+  const [search, setSearch] = useState("");
+  const [weather, setWeather] = useState({});
+
+  /*
+    Search button is pressed. Make a fetch call to the Open Weather Map API.
+  */
+  const searchPressed = () => {
+    fetch(`${api.base}weather?q=${search}&units=metric&APPID=${api.key}`)
+      .then((res) => res.json())
+      .then((result) => {
+        setWeather(result);
+      });
+  };
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        {/* HEADER  */}
+        <h1>Weather App</h1>
+
+        {/* Search Box - Input + Button  */}
+        <div>
+          <input
+            type="text"
+            placeholder="Enter city/town..."
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button onClick={searchPressed}>Search</button>
+        </div>
+
+        {/* If weather is not undefined display results from API */}
+        {typeof weather.main !== "undefined" ? (
+          <div>
+            {/* Location  */}
+            <p>{weather.name}</p>
+
+            {/* Temperature Celsius  */}
+            <p>{weather.main.temp}°C</p>
+
+            {/* Condition (Sunny ) */}
+            <p>{weather.weather[0].main}</p>
+            <p>({weather.weather[0].description})</p>
+          </div>
+        ) : (
+          ""
+        )}
+      </header>
+    </div>
+  );
+}
+
+export default App;
+/////////////////////////////////////////////////////////////////
+// import "./App.css";
+// import React from "react";
+
+// const api = {
+//     key: "f50c0b3dbe98a792fb23929dee04c30a",//ENTER_YOUR_API_KEY_HERE
+//     base: "https://api.openweathermap.org/data/2.5/",
+// };
+
+// class App extends React.Component {
+//     constructor(props) {
+//         super(props);
+
+//           this.state ={
+//             search = '',
+//             setSearch = [],
+//             weather = [],
+//             setWeather =[]
+
+
+
+//     }
+//     componentDidMount() {
+//         fetch(`${api.base}weather?q=${search}&units=metric&APPID=${api.key}`)
+//             .then((res) => res.json())
+//             .then((result) => {
+//                 setWeather(result);
+//             });
+//     }
+//     render() {
+//     // const [search, setSearch] = this.state("");
+//     // const [weather, setWeather] = this.state({});
+
+//     /*
+//       Search button is pressed. Make a fetch call to the Open Weather Map API.
+//     */
+
+
+//     return (
+//         <div className="App">
+//             <header className="App-header">
+//                 {/* HEADER  */}
+//                 <h1>Weather App</h1>
+
+//                 {/* Search Box - Input + Button  */}
+//                 <div>
+//                     <input
+//                         type="text"
+//                         placeholder="Enter city/town..."
+//                         onChange={(e) => setSearch(e.target.value)}
+//                     />
+//                     <button onClick={searchPressed}>Search</button>
+//                 </div>
+
+//                 {/* If weather is not undefined display results from API */}
+//                 {typeof weather.main !== "undefined" ? (
+//                     <div>
+//                         {/* Location  */}
+//                         <p>{weather.name}</p>
+
+//                         {/* Temperature Celsius  */}
+//                         <p>{weather.main.temp}°C</p>
+
+//                         {/* Condition (Sunny ) */}
+//                         <p>{weather.weather[0].main}</p>
+//                         <p>({weather.weather[0].description})</p>
+//                     </div>
+//                 ) : (
+//                     ""
+//                 )}
+//             </header>
+//         </div>
+//     );
+// }
+// }
+// }
+// export default App;
