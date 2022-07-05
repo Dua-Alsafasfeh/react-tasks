@@ -4,14 +4,9 @@ import {Routes,BrowserRouter, Route} from "react-router-dom";
 import Home from './Components/Home/Home';
 import About from './Components/About/About';
 import Form from './Components/Form/Form';
-
-
-
 import './App.css';
 
 class App extends Component {
- 
-
   render() { 
     return (
       <BrowserRouter>
